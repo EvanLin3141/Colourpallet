@@ -27,13 +27,14 @@ public class ColourTable {
     }
 
     public void add(int red, int green, int blue) {
+        this.checkCapacity();
         ErrorChecking.errorCheck(red, green, blue);
-
         Colour colour = new Colour(red, green, blue);
         this.palette.add(colour);
     }
 
     public void add(String binaryBits) {
+        this.checkCapacity();
         Colour colour = ConvertToInt.binaryToStringRGB(binaryBits);
         ErrorChecking.errorCheck(colour);
         this.palette.add(colour);
@@ -48,8 +49,11 @@ public class ColourTable {
     }
 
 
-
-
+    private void checkCapacity() {
+        if (palette.size() >= paletteSize) {
+            throw new IllegalStateException("Palette is full. Cannot add more colors.");
+        }
+    }
 }
 
 
