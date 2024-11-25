@@ -1,0 +1,7 @@
+My ColourTable class initially represents as an ArrayList, however due to the additional
+    funtionality added of not allowed the same 2 colours to appear I've adjusted it to HashSet
+    But realising I need to compare R,G,B Variables made me realise O(n) time would be better;
+
+
+Validity is ensured by using some error checking classes in which we created. Refactored to its own package and class
+    as it makes more sense in this case. Or else our code will have technical style debts.
