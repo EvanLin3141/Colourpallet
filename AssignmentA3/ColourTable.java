@@ -11,7 +11,7 @@ import AssignmentA3.utils.ErrorChecking;
 
 public class ColourTable {
     private int paletteSize;
-    private HashSet<Colour> palette = new HashSet<>();
+    private ArrayList<Colour> palette = new ArrayList<>();
 
     public ColourTable(int paletteSize) {
         if (paletteSize <= 1 || !Calculate.log(paletteSize)) {
@@ -58,9 +58,11 @@ public class ColourTable {
     }
 
     private void checkIfColourExist(Colour itemToCheck) {
-        if (this.palette.contains(itemToCheck)) {
-            throw new IllegalStateException("This Colour already exist in our palette.");
-
+        for (Colour color : palette) {
+            if (color.getRed() == itemToCheck.getRed() && color.getGreen() == itemToCheck.getGreen()
+                    && color.getBlue() == itemToCheck.getBlue()) {
+                throw new IllegalStateException("Cannot have the same 2 colours in a palette");
+            }
         }
     }
 }
