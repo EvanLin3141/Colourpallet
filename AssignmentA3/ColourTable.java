@@ -11,7 +11,7 @@ import AssignmentA3.utils.ErrorChecking;
 
 public class ColourTable {
     private int paletteSize;
-    private ArrayList<Colour> palette = new ArrayList<>();
+    private HashSet<Colour> palette = new HashSet<>();
 
     public ColourTable(int paletteSize) {
         if (paletteSize <= 1 || !Calculate.log(paletteSize)) {
@@ -27,16 +27,17 @@ public class ColourTable {
     }
 
     public void add(int red, int green, int blue) {
-        this.checkCapacity();
+
         ErrorChecking.errorCheck(red, green, blue);
         Colour colour = new Colour(red, green, blue);
+        this.performCheck(colour);
         this.palette.add(colour);
     }
 
     public void add(String binaryBits) {
-        this.checkCapacity();
         Colour colour = ConvertToInt.binaryToStringRGB(binaryBits);
         ErrorChecking.errorCheck(colour);
+        this.performCheck(colour);
         this.palette.add(colour);
     }
 
@@ -49,9 +50,17 @@ public class ColourTable {
     }
 
 
-    private void checkCapacity() {
+    private void performCheck(Colour itemToCheck) {
         if (palette.size() >= paletteSize) {
             throw new IllegalStateException("Palette is full. Cannot add more colors.");
+        }
+        this.checkIfColourExist(itemToCheck);
+    }
+
+    private void checkIfColourExist(Colour itemToCheck) {
+        if (this.palette.contains(itemToCheck)) {
+            throw new IllegalStateException("This Colour already exist in our palette.");
+
         }
     }
 }
@@ -59,3 +68,7 @@ public class ColourTable {
 
 
 // changed from adding list int to just adding sphere
+
+// changed from ArrayList to Hashset to get O(1) constant time to search if colour exist
+// Initially wanted to do this but realised its probably better to do in O(n) time bc we have to compare
+//      All red green blue colours to see if the colours are the same
